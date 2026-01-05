@@ -37,6 +37,12 @@ if Gem::Version.new(rails_version) > Gem::Version.new("4.2.999999")
   end
 end
 
+group "test" do
+  # Rails 6.1 expects minitest 5.x; Ruby 3.4 ships minitest 6.x as a default gem.
+  gem "minitest", "~> 5.22"
+  gem "benchmark"
+end
+
 if Gem::Version.new(rails_version) < Gem::Version.new("5.0")
   # Previous to Rails5, we need to include concurrent-ruby explicitly,
   # in 5.x it's a dependency of Rails.
@@ -59,7 +65,7 @@ if Gem::Version.new(RUBY_VERSION.dup) < Gem::Version.new("2.1")
   gem 'nokogiri', '< 1.7'
 end
 
-gem "sqlite3", :platform => [:ruby, :mswin, :mingw]
+gem "sqlite3", "~> 1.4", :platform => [:ruby, :mswin, :mingw]
 
 # for JRuby
 gem "activerecord-jdbcsqlite3-adapter", :platform => :jruby
